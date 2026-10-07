@@ -449,6 +449,58 @@ body.skim .trn .a>*{display:block}
 .trn-stats b{display:block;font:600 27px/1 var(--serif);color:var(--ink);font-variant-numeric:lining-nums tabular-nums}
 .trn-stats span{display:block;margin-top:8px;font:500 12.5px/1.3 var(--sans);color:var(--dim)}
 @media (min-width:700px){.trn-card,.trn-end{padding-top:44px}}
+
+/* ── вовлечение: чтение и возвращение ── */
+body{font-size:clamp(17.5px,16.5px + .3vw,18.75px)}
+@media (max-width:600px){main{padding-left:18px;padding-right:18px}}
+.a p,.a li,.lede{hanging-punctuation:first allow-end}
+.top{transition:transform .28s ease}
+.top.away{transform:translateY(calc(-100% + 3px))}
+
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));z-index:47;display:flex;align-items:center;gap:12px;
+  width:max-content;max-width:min(440px,calc(100vw - 32px));padding:11px 12px 11px 16px;border-radius:16px;border:1px solid var(--line2);
+  background:var(--bg3);color:var(--ink);box-shadow:var(--shadow);font:500 14.5px/1.35 var(--sans);
+  opacity:0;transform:translate(-50%,14px);pointer-events:none;transition:opacity .22s,transform .22s}
+.toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.toast::before{content:"";flex:none;width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px rgba(91,214,154,.18)}
+.toast.big::before{width:11px;height:11px;background:var(--star);box-shadow:0 0 0 5px rgba(240,180,92,.2)}
+.toast button{-webkit-appearance:none;appearance:none;flex:none;height:34px;padding:0 13px;border:0;border-radius:999px;background:var(--violet);
+  color:#fff;font:600 13.5px var(--sans);cursor:pointer;touch-action:manipulation}
+@media (min-width:1200px){.toast{left:calc(50% + var(--rail) / 2)}}
+
+.sec-end{margin:46px 0 0;padding:20px 20px 18px;border-radius:20px;border:1px solid var(--line2);background:var(--bg2);font-family:var(--sans)}
+.sec-end-k{font:600 11.5px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--dim)}
+.sec-end-t{margin-top:6px;font:600 21px/1.3 var(--serif);color:var(--ink)}
+.sec-end-p{margin-top:6px;font:500 14px var(--sans);color:var(--dim);font-variant-numeric:tabular-nums}
+.sec-end-p.ok{color:var(--ok)}
+.sec-end .sec-train{margin-top:14px}
+.sec-next{display:block;margin-top:18px;padding-top:15px;border-top:1px solid var(--line);color:var(--dim);text-decoration:none;
+  font:500 13.5px/1.45 var(--sans)}
+.sec-next b{display:block;margin-top:4px;font:600 18px/1.35 var(--serif);color:var(--violet-ink)}
+.sec-next b::after{content:"\2002→"}
+body.filtering .sec-end{display:none}
+.toc-pc{float:right;letter-spacing:0;font-variant-numeric:tabular-nums}
+
+.fresh{margin:22px 0 0;padding:14px 16px;border-radius:16px;border:1px solid rgba(91,214,154,.35);background:rgba(91,214,154,.07);
+  font:500 14.5px/1.5 var(--sans);color:var(--ink2)}
+.fresh b{color:var(--ok)}
+.fresh a{display:block;margin-top:6px;color:var(--violet-ink);text-decoration:none;font:600 15px/1.4 var(--serif)}
+.fresh[hidden],.qod[hidden]{display:none}
+.today-n .today-t b{color:var(--dim)}
+.chain{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:16px}
+.chain i{display:flex;flex-direction:column;align-items:center;gap:6px;font:600 11px/1 var(--sans);font-style:normal;color:var(--dim)}
+.chain i::before{content:"";width:100%;max-width:38px;height:10px;border-radius:6px;background:var(--line)}
+.chain i.on::before{background:var(--ok)}
+.chain i.now{color:var(--ink)}
+.chain i.now:not(.on)::before{background:transparent;box-shadow:inset 0 0 0 1.5px var(--line2)}
+.today-rem{display:block;margin-top:14px;padding-top:13px;border-top:1px solid var(--line);color:var(--violet-ink);text-decoration:none;
+  font:600 14px/1.35 var(--sans)}
+.today-rem span{display:block;margin-top:3px;font-weight:500;font-size:12.5px;color:var(--dim)}
+.qod{margin:14px 0 4px;padding:16px 18px;border-radius:18px;border:1px solid var(--trap-line);background:var(--trap-bg);font-family:var(--sans)}
+.qod-k{font:600 11.5px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--star)}
+.qod-q{margin-top:8px;font:600 clamp(19px,4.8vw,22px)/1.32 var(--serif);color:var(--ink);text-wrap:balance}
+.qod-go{-webkit-appearance:none;appearance:none;margin-top:14px;height:40px;padding:0 16px;border:0;border-radius:999px;background:var(--chip);
+  color:var(--violet-ink);font:600 14px var(--sans);cursor:pointer;touch-action:manipulation}
 </style>
 </head>
 <body>
@@ -485,11 +537,19 @@ body.skim .trn .a>*{display:block}
     <h1>Interview.NET</h1>
     <p class="lede">Подготовка к собеседованию на .NET‑разработчика: <b class="n-total">161</b> <span data-plural="вопрос|вопроса|вопросов">вопросов</span>. К каждому — короткий ответ, который говоришь первым, разбор и подводные камни, на которых обычно добивают.</p>
     <div class="prog"><span class="track"><i id="heroBar"></i></span><span id="heroDone">Пока ничего не разобрано</span></div>
+    <div class="fresh" id="fresh" hidden></div>
     <div class="today" id="today">
       <div class="today-k"><span>Тренировка на сегодня</span><span class="today-streak" id="tdStreak"></span></div>
-      <div class="today-n"><div><b id="tdDue">0</b><span id="tdDueL">повторений</span></div><div><b id="tdNew">0</b><span id="tdNewL">новых</span></div></div>
+      <div class="today-n"><div><b id="tdDue">0</b><span id="tdDueL">повторений</span></div><div><b id="tdNew">0</b><span id="tdNewL">новых</span></div><div class="today-t"><b id="tdMin">0</b><span id="tdMinL">минут</span></div></div>
       <button class="today-go" id="btnTrain" type="button">Начать тренировку</button>
+      <div class="chain" id="chain" role="img" aria-label="Занятия за последние 7 дней"></div>
       <div class="today-f"><span id="tdMastered"></span><span class="npd-w"><span class="npd-l">Новых в день</span><span class="npd" id="npd" role="group" aria-label="Новых вопросов в день"><button type="button" data-n="5">5</button><button type="button" data-n="10">10</button><button type="button" data-n="20">20</button></span></span></div>
+      <a class="today-rem" href="reminder.ics">Напоминать каждый день в 20:00<span>добавится в календарь, время можно поменять</span></a>
+    </div>
+    <div class="qod" id="qod" hidden>
+      <div class="qod-k">Вопрос дня</div>
+      <div class="qod-q" id="qodQ"></div>
+      <button class="qod-go" id="qodGo" type="button">Ответить за минуту</button>
     </div>
     <details class="how">
       <summary>Как заниматься</summary>
@@ -6031,6 +6091,7 @@ var MIGRATE={"q1": "dotnet-clr-il", "q2": "dotnet-versions", "q3": "static-vs-dy
     $('pbar').style.width=pct; $('heroBar').style.width=pct; $('tocBar').style.width=pct;
     $('heroDone').textContent=all?('Разобрано '+all+' из '+TOTAL):'Пока ничего не разобрано';
     $('tocDone').textContent=all?('Разобрано '+all+' из '+TOTAL):('Из '+TOTAL+' пока ничего не разобрано');
+    if(typeof ends!=='undefined'&&ends) extraCounts();
   }
   qs.forEach(function(q,i){
     if(st.done[q.id]){ q.classList.add('done'); if(ticks[i]) ticks[i].classList.add('done'); }
@@ -6041,7 +6102,7 @@ var MIGRATE={"q1": "dotnet-clr-il", "q2": "dotnet-versions", "q3": "static-vs-dy
       if(ticks[i]) ticks[i].classList.toggle('done',d);
       if(d){ st.done[q.id]=1; mk.classList.remove('just'); void mk.offsetWidth; mk.classList.add('just'); }
       else delete st.done[q.id];
-      save(); counts(); srsMark(q.id,d);
+      save(); counts(); srsMark(q.id,d); if(d) cheer(q);
     });
     on(q.querySelector('h3'),function(){ if(st.mode==='quiz') q.classList.toggle('open'); });
   });
@@ -6098,7 +6159,7 @@ var MIGRATE={"q1": "dotnet-clr-il", "q2": "dotnet-versions", "q3": "static-vs-dy
       q.classList.toggle('hide',!ok); if(ok) shown++;
     });
     secs.forEach(function(s){ s.classList.toggle('hide',!s.querySelector('.q:not(.hide)')); });
-    $('empty').classList.toggle('on',shown===0); partsVis();
+    $('empty').classList.toggle('on',shown===0); partsVis(); body.classList.toggle('filtering',!!v||starOnly);
     visible=qs.filter(function(q){ return !q.classList.contains('hide'); });
     track();
   }
@@ -6169,6 +6230,7 @@ var MIGRATE={"q1": "dotnet-clr-il", "q2": "dotnet-versions", "q3": "static-vs-dy
     var y=window.pageYOffset;
     if(y>lastY+8&&y>260) dock.classList.add('away');
     else if(y<lastY-8||y<=260) dock.classList.remove('away');
+    var tpe=doc.querySelector('.top'); if(tpe) tpe.classList.toggle('away',dock.classList.contains('away')&&!srow.classList.contains('on')&&!toc.classList.contains('on'));
     if(Math.abs(y-lastY)>8) lastY=y;
     clearTimeout(saveT); saveT=setTimeout(function(){ if(cur){ st.pos=cur.id; save(); }
       try{ history.replaceState({y:window.pageYOffset},''); }catch(_){} },400);
@@ -6320,6 +6382,7 @@ var MIGRATE={"q1": "dotnet-clr-il", "q2": "dotnet-versions", "q3": "static-vs-dy
     $('btnTrain').textContent=n?'Начать тренировку':(p.left?'Ещё 5 новых':'На сегодня всё повторено');
     var b=$('trnBadge'); b.textContent=n>99?'99+':n; b.hidden=!n;
     npdBtns.forEach(function(x){ var a=+x.getAttribute('data-n')===st.npd; x.classList.toggle('on',a); x.setAttribute('aria-pressed',a?'true':'false'); });
+    if($('chain')&&typeof WD!=='undefined'&&WD) refreshExtras();
   }
   npdBtns.forEach(function(x){ on(x,function(){ st.npd=+x.getAttribute('data-n'); save(); refreshToday(); }); });
   function moreNew(){ var t=today(); if(st.nw.d!==t) st.nw={d:t,n:0}; st.nw.n-=5; save(); }
@@ -6355,16 +6418,16 @@ var MIGRATE={"q1": "dotnet-clr-il", "q2": "dotnet-versions", "q3": "static-vs-dy
     }catch(e){}
   }
   function trnOpen(){ return !trn.hidden; }
-  function session(sec){
-    S={list:buildQueue(sec||null), i:0, n:0, first:{}, ok:0, sec:sec||null, pushed:S?S.pushed:false};
+  function session(sec,list){
+    S={list:list||buildQueue(sec||null), i:0, n:0, first:{}, ok:0, sec:sec||null, pushed:S?S.pushed:false};
     if(S.list.length) showCard(); else showEnd();
   }
-  function startTraining(sec){
+  function startTraining(sec,list){
     tog(false);
     if(!S||!S.pushed){ try{ history.pushState({trn:1},''); }catch(_){} }
     S={pushed:true};
     trn.hidden=false; body.classList.add('trn-on');
-    session(sec);
+    session(sec,list);
   }
   function closeTraining(keepHistory){
     if(trn.hidden) return;
@@ -6439,6 +6502,7 @@ var MIGRATE={"q1": "dotnet-clr-il", "q2": "dotnet-versions", "q3": "static-vs-dy
     $('trnS1').textContent=S.n; $('trnS1l').textContent=plural(S.n,'ответ|ответа|ответов');
     $('trnS2').textContent=seen?Math.round(S.ok/seen*100)+'%':'—';
     $('trnS3').textContent=k; $('trnS3l').textContent=plural(k,'день|дня|дней')+' подряд';
+    if(S.n&&[3,7,14,21,30,50,100].indexOf(k)>=0) $('trnEndP').textContent+=' Серия '+k+' '+plural(k,'день|дня|дней')+' подряд'+'\u00a0— так знания и остаются надолго.';
     $('trnMore').hidden=!more;
     refreshToday();
   }
@@ -6465,6 +6529,107 @@ var MIGRATE={"q1": "dotnet-clr-il", "q2": "dotnet-versions", "q3": "static-vs-dy
   }
   doc.addEventListener('visibilitychange',function(){ if(!doc.hidden) refreshToday(); });
   refreshToday();
+
+  /* ── вовлечение: время до цели, всплывашки, конец раздела, цепочка дней, вопрос дня, новое ── */
+  function qMin(q){ if(q._m==null){ var a=q.querySelector('.a'); q._m=(a?a.textContent.length:0)/900; } return q._m; }   /* ~900 знаков в минуту */
+  function fmtMin(m){ m=Math.max(1,Math.round(m)); if(m<60) return m+' мин'; var h=Math.floor(m/60), r=m%60; return h+' ч'+(r?' '+r+' мин':''); }
+  function leftIn(list){ var m=0; list.forEach(function(q){ if(!q.classList.contains('done')) m+=qMin(q); }); return m; }
+  var topEl=doc.querySelector('.top'), toastEl=doc.createElement('div'), toastT=null;
+  toastEl.className='toast'; toastEl.setAttribute('role','status'); toastEl.setAttribute('aria-live','polite'); body.appendChild(toastEl);
+  function toast(msg,label,fn,big){
+    toastEl.textContent=''; toastEl.className='toast'+(big?' big':'');
+    var s=doc.createElement('span'); s.textContent=msg; toastEl.appendChild(s);
+    if(label){ var b=doc.createElement('button'); b.type='button'; b.textContent=label; toastEl.appendChild(b);
+      b.addEventListener('click',function(){ toastEl.classList.remove('on'); fn(); }); }
+    void toastEl.offsetWidth; toastEl.classList.add('on');
+    clearTimeout(toastT); toastT=setTimeout(function(){ toastEl.classList.remove('on'); },label?4200:2400);
+    try{ if(navigator.vibrate) navigator.vibrate(12); }catch(e){}
+  }
+  function secOf(q){ return q.parentNode; }
+  function cheer(q){                                       /* «Разобрал» → сколько осталось до конца раздела */
+    var sec=secOf(q), all=sec.querySelectorAll('.q'), n=all.length, k=sec.querySelectorAll('.q.done').length, t=sec.querySelector('h2').textContent;
+    if(k===n){
+      var p=sec.getAttribute('data-part'), rest=p?secs.filter(function(s){ return s.getAttribute('data-part')===p&&s.querySelectorAll('.q:not(.done)').length; }):[1];
+      if(p&&!rest.length) toast(p.split(' · ')[0]+' пройдена целиком!','Закрепить',function(){ startTraining(sec); },true);
+      else toast('Раздел «'+t+'» пройден','Закрепить',function(){ startTraining(sec); },true);
+    }
+    else if(n-k<=2) toast('Ещё '+(n-k)+' — и раздел «'+t+'» пройден');
+    else toast('Разобрано '+k+' из '+n+' в разделе');
+  }
+  /* карточка в конце раздела: прогресс, закрепление и «дальше» */
+  var ends=[];
+  secs.forEach(function(sec,i){
+    var nx=secs[i+1], box=doc.createElement('div');
+    box.className='sec-end';
+    box.innerHTML='<div class="sec-end-k">Конец раздела</div><div class="sec-end-t"></div><div class="sec-end-p"></div>';
+    box.querySelector('.sec-end-t').textContent=sec.querySelector('h2').textContent;
+    var b=doc.createElement('button'); b.type='button'; b.className='sec-train'; b.innerHTML=ICO+'<span>Закрепить тренировкой</span>';
+    on(b,function(){ startTraining(sec); }); box.appendChild(b);
+    if(nx){
+      var a=doc.createElement('a'), nq=nx.querySelectorAll('.q').length, lab=doc.createElement('span'), bt=doc.createElement('b');
+      a.className='xref sec-next'; a.href='#'+nx.id;
+      lab.textContent='Дальше · '+nq+' '+plural(nq,'вопрос|вопроса|вопросов')+' · ≈ '+fmtMin(leftIn([].slice.call(nx.querySelectorAll('.q'))));
+      bt.textContent=nx.querySelector('h2').textContent;
+      a.appendChild(lab); a.appendChild(bt); box.appendChild(a);
+    }
+    sec.appendChild(box); ends.push(box);
+  });
+  /* части в оглавлении: «12/28» */
+  var tocParts=[].slice.call(doc.querySelectorAll('.toc-part'));
+  tocParts.forEach(function(p){ var s=doc.createElement('span'); s.className='toc-pc'; p.appendChild(s); p._t=p.firstChild.textContent; });
+  function extraCounts(){
+    var left=leftIn(qs), done=doc.querySelectorAll('.q.done').length;
+    if(done&&done<TOTAL) $('heroDone').textContent+=' · осталось ≈ '+fmtMin(left);
+    else if(!done) $('heroDone').textContent+=' · всего ≈ '+fmtMin(left);
+    secs.forEach(function(sec,i){
+      var all=[].slice.call(sec.querySelectorAll('.q')), k=sec.querySelectorAll('.q.done').length, el=sec.querySelector('[data-seccount]');
+      if(el&&k<all.length) el.textContent+=' · ≈ '+fmtMin(leftIn(all));
+      var p=ends[i]&&ends[i].querySelector('.sec-end-p');
+      if(p){ p.textContent=k===all.length?'Пройден целиком':('Разобрано '+k+' из '+all.length+(k?' · осталось ≈ '+fmtMin(leftIn(all)):'')); p.classList.toggle('ok',k===all.length); }
+    });
+    tocParts.forEach(function(tp){
+      var n=0, k=0;
+      secs.forEach(function(sec){ if(sec.getAttribute('data-part')===tp._t){ n+=sec.querySelectorAll('.q').length; k+=sec.querySelectorAll('.q.done').length; } });
+      tp.lastChild.textContent=k+'/'+n;
+    });
+  }
+  /* цепочка 7 дней, время на сегодня, вопрос дня */
+  var WD=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+  function refreshExtras(){
+    var t=today(), ch=$('chain'), p=plan(), m=Math.ceil((p.due.length+p.fresh.length)*40/60);
+    $('tdMin').textContent=m; $('tdMinL').textContent=plural(m,'минута|минуты|минут')+' на всё';
+    ch.textContent='';
+    for(var d=t-6; d<=t; d++){
+      var i=doc.createElement('i'); i.textContent=WD[new Date(d*DAY+432e5).getUTCDay()];
+      if(st.log[d]) i.className='on'; if(d===t) i.className+=' now';
+      ch.appendChild(i);
+    }
+  }
+  (function(){
+    var t=today(), c=qs.filter(function(q){ var s=st.srs[q.id]; return q.getAttribute('data-star')==='1'&&!(s&&s[1]>=21); });
+    if(!c.length) c=qs.filter(function(q){ var s=st.srs[q.id]; return !(s&&s[1]>=21); });
+    if(!c.length) return;
+    var q=c[(Math.imul(t,2654435761)>>>0)%c.length];
+    $('qodQ').textContent=q.querySelector('h3').firstChild.textContent.trim();
+    $('qod').hidden=false;
+    on($('qodGo'),function(){ startTraining(null,[q]); });
+  })();
+  /* что добавилось с прошлого визита */
+  (function(){
+    var ids={}; qs.forEach(function(q){ ids[q.id]=1; });
+    if(!st.seen||typeof st.seen!=='object'){ st.seen=ids; save(); return; }
+    var fresh=qs.filter(function(q){ return !st.seen[q.id]; });
+    st.seen=ids; save();
+    if(!fresh.length) return;
+    var box=$('fresh'), head=doc.createElement('div');
+    head.innerHTML='С прошлого раза добавлено <b></b> — они уже в тренировке:';
+    head.querySelector('b').textContent=fresh.length+' '+plural(fresh.length,'вопрос|вопроса|вопросов');
+    box.appendChild(head);
+    fresh.slice(0,3).forEach(function(q){ var a=doc.createElement('a'); a.className='xref'; a.href='#'+q.id;
+      a.textContent=(q.getAttribute('data-num')||'')+' '+q.querySelector('h3').firstChild.textContent.trim(); box.appendChild(a); });
+    box.hidden=false;
+  })();
+  counts(); refreshToday();
 
   /* клавиатура */
   doc.addEventListener('keydown',function(e){

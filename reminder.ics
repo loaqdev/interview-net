@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Interview.NET//Reminder//RU
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:interview-net-daily-training@loaqdev.github.io
+DTSTAMP:20261007T000000Z
+DTSTART:20261008T200000
+DURATION:PT15M
+RRULE:FREQ=DAILY
+SUMMARY:Interview.NET — тренировка 10 минут
+DESCRIPTION:Повторения и новые вопросы на сего
+ дня: https://loaqdev.github.io/interview-net/
+URL:https://loaqdev.github.io/interview-net/
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Пора на тренировку — 10 минут
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+END:VCALENDAR
